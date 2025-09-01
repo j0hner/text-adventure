@@ -1,8 +1,6 @@
-class Feature(string name, string desc, string unlockText, string require, Feature? newFeature = null, Item? newItem = null, Dictionary<Direction, string>? newExit = null)
+class Feature(string name, string desc, string unlockText, string require, string[]? aliases = null, Feature? newFeature = null, Item? newItem = null, Dictionary<Direction, string>? newExit = null)
+: GameObject(name, desc, aliases)
 {
-    public string Name { get; } = name;
-    public string Desc { get; } = desc;
-
     public string UnlockText { get; } = unlockText;
     public string Require { get; } = require;
 
