@@ -1,4 +1,7 @@
-class Room(string name, string desc, List<Item>? items = null, List<Feature>? features = null)
+class Room(
+    string name, string desc,
+    List<Item>? items = null,
+    List<Feature>? features = null)
 : GameObject(name, desc, null)
 {
     public Dictionary<Direction, Room> Exits { get; set; } = [];

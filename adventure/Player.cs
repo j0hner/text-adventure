@@ -1,7 +1,15 @@
-class Player(Room startLocation, List<Item>? startItems = null)
+class Player
 {
-    List<Item> Inventory = startItems ?? [];
-    Room Location = startLocation;
+    List<Item> Inventory;
+    Room Location;
+
+    public Player(Room startLocation, List<Item>? startItems = null)
+    {
+        Location = startLocation;
+        Inventory = startItems ?? new List<Item>();
+
+        Console.WriteLine(Location);
+    }
 
     string Move(Direction direction)
     {

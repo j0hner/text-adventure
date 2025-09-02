@@ -1,0 +1,63 @@
+{
+    "rooms": [
+        {
+            "name": "Hall",
+            "desc": "You are in a grand hall with marble floors",
+            "exits": {
+                "north":"Kitchen"
+            },
+            
+            "features" :[
+                {
+                    "name": "Study door",
+                    "desc": "A large heavy door. Locked.",
+                    "aliases": ["door", "sdoor"],
+                    "unlock_text" : "You push the door open and an old study appears on the other side.",
+                    
+                    "require": ["Study key"],
+                    "sequencial": false,
+
+                    "new_items" : [],
+                    "new_features" : [],
+                    "new_exits": {
+                        "east": "Study"
+                    }
+                }
+            ],
+
+            "items" : [
+                {
+                    "name" : "Study key",
+                    "desc" : "A heavy iron key",
+                    "aliases" : ["key", "skey"]
+                }
+            ]
+        },
+        {
+            "name": "Kitchen",
+            "desc": "You are in an old dusty kitchen. The smell is awful",
+            "exits": {
+                "south" : "Hall"
+            }
+        },
+        {
+            "name": "Study",
+            "desc": "You are in sunlit study full of old books.",
+            "exits": {
+                "west" : "Hall"
+            },
+            "items":[
+                {
+                    "name" : "Note",
+                    "desc" : "A faded sheet of paper with strange symbols on it",
+                    "aliases" : []
+                }
+            ]
+        }
+    ],
+
+    "player" : {
+        "start_location" : "hall",
+        "start_inventory" : []
+    }
+}
