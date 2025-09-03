@@ -187,6 +187,7 @@ static class WorldBuilder
                 Name ?? throw new InvalidDataException($"Mandatory JSON key 'name' in feature is missing."),
                 Desc ?? throw new InvalidDataException($"Mandatory JSON key 'desc' in {Name} is missing."),
                 Require ?? throw new InvalidDataException($"Mandatory JSON key 'require' in {Name} is missing."),
+                Sequential ?? false, 
 
                 UnlockText ?? "",
                 Aliases ?? Array.Empty<string>(),
