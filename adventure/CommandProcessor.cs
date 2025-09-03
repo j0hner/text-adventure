@@ -4,16 +4,18 @@ static class CommandProcessor
 {
     static Dictionary<string, Func<Player, string[], string>> Commands = new Dictionary<string, Func<Player, string[], string>>()
     {
+        ["exit"] = (player, _) => player.Exit(),
+
         ["look"] = (player, args) => player.Look(args),
-        // ["take"]  = (player, args) => player.Take(args),
-        // ["drop"]  = (player, args) => player.Drop(args),
-        ["north"] = (player, args) => player.North(),
-        ["south"] = (player, args) => player.South(),
-        ["east"] = (player, args) => player.East(),
-        ["west"] = (player, args) => player.West(),
-        ["up"] = (player, args) => player.Down(),
-        ["down"] = (player, args) => player.Down(),
-        ["exit"] = (player, args) => player.Exit(),
+        ["take"]  = (player, args) => player.Take(args),
+        ["drop"]  = (player, args) => player.Drop(args),
+
+        ["north"] = (player, _) => player.North(),
+        ["south"] = (player, _) => player.South(),
+        ["east"] = (player, _) => player.East(),
+        ["west"] = (player, _) => player.West(),
+        ["up"] = (player, _) => player.Down(),
+        ["down"] = (player, _) => player.Down(),
     };
 
     static Dictionary<string, string> CommandAliases = new Dictionary<string, string>()
@@ -34,6 +36,8 @@ static class CommandProcessor
         ["l"] = "look",
         ["insp"] = "look",
 
+        ["t"] = "take",
+        ["tk"] = "take",
         ["get"] = "take",
         ["grab"] = "take",
 
@@ -48,7 +52,7 @@ static class CommandProcessor
 
     public static string? Process(Player player, string input)
     {
-        var tokens = Regex.Matches(input, @"[\""].+?[\""]|\S+")
+        var tokens = Regex.Matches(input, @"[\""].+?[\""]|\S+") // regex separate by space, but keep terms in quotes together
                           .Select(m => m.Value.Trim('"'))
                           .ToArray();
 
@@ -65,9 +69,7 @@ static class CommandProcessor
         if (Commands.TryGetValue(command, out var action))
             return action(player, args); // look for actual command
         
-        
-        
-        return $"Unknown command: {command}"; // command not found
+        return $"Do what?"; // command not found
         
     }
 }

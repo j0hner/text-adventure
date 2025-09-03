@@ -38,11 +38,48 @@ class Player
         if (args.Length > 0)
         {
             string target = args[0];
-        
-            foreach (Item item in Location.Items) if (item.Matches(target)) return item.Desc;
-            foreach (Feature feature in Location.Features) if (feature.Matches(target)) return feature.Desc;
+
+            foreach (Item item in Location.Items.Concat(Inventory)) if (item.Matches(target)) return item.Desc; // look for items in room an inventory
+            foreach (Feature feature in Location.Features) if (feature.Matches(target)) return feature.Desc; // look for features
         }
 
         return "Look at what?";
     }
+
+    public string Take(string[] args)
+    {
+        if (args.Length > 0)
+        {
+            string target = args[0];
+
+            foreach (Item item in Location.Items)
+                if (item.Matches(target))
+                {
+                    Location.Items.Remove(item);
+                    Inventory.Add(item);
+                    return $"Took {item}.";
+                }
+        }
+
+        return "Take what?";
+    }
+
+    public string Drop(string[] args)
+    {
+        if (args.Length > 0)
+        {
+            string target = args[0];
+
+            foreach (Item item in Inventory)
+                if (item.Matches(target))
+                {
+                    Inventory.Remove(item);
+                    Location.Items.Add(item);
+                    return $"Dropped {item}.";
+                }
+        }
+
+        return "Take what?";
+    }
+
 }
