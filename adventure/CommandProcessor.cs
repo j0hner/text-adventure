@@ -4,7 +4,7 @@ static class CommandProcessor
 {
     static Dictionary<string, Func<Player, string[], string>> Commands = new Dictionary<string, Func<Player, string[], string>>()
     {
-        // ["look"] = (player, args) => player.Look(args),
+        ["look"] = (player, args) => player.Look(args),
         // ["take"]  = (player, args) => player.Take(args),
         // ["drop"]  = (player, args) => player.Drop(args),
         ["north"] = (player, args) => player.North(),
@@ -57,10 +57,14 @@ static class CommandProcessor
         var command = tokens[0].ToLower();
         var args = tokens.Skip(1).ToArray();
 
+
+
+        if (CommandAliases.TryGetValue(command, out var deAliased))
+            command = deAliased; // de-alias command
+
         if (Commands.TryGetValue(command, out var action))
             return action(player, args); // look for actual command
-        else if (CommandAliases.TryGetValue(command, out var deAliased))
-            return Commands[deAliased](player, args); // look for alias
+        
         
         
         return $"Unknown command: {command}"; // command not found

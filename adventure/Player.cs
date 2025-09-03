@@ -32,4 +32,17 @@ class Player
         Environment.Exit(0);
         return ""; // this has to behere since ProcessCommand expects a string returning method
     }
+
+    public string Look(string[] args)
+    {
+        if (args.Length > 0)
+        {
+            string target = args[0];
+        
+            foreach (Item item in Location.Items) if (item.Matches(target)) return item.Desc;
+            foreach (Feature feature in Location.Features) if (feature.Matches(target)) return feature.Desc;
+        }
+
+        return "Look at what?";
+    }
 }
