@@ -8,7 +8,7 @@ class Player
         Location = startLocation;
         Inventory = startItems ?? new List<Item>();
 
-        Console.WriteLine(Location);
+        Console.WriteLine($"{Location}\n");
     }
 
     string Move(Direction direction)
@@ -18,7 +18,7 @@ class Player
             Location = Location.Exits[direction];
             return $"You went {direction}.\n{Location}";
         }
-        return "I can't go that way";
+        return "You can't go that way";
     }
 
     public string North() => Move(Direction.North);
@@ -27,4 +27,9 @@ class Player
     public string West() => Move(Direction.West);
     public string Up() => Move(Direction.Up);
     public string Down() => Move(Direction.Down);
+    public string Exit()
+    {
+        Environment.Exit(0);
+        return ""; // this has to behere since ProcessCommand expects a string returning method
+    }
 }

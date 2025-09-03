@@ -19,4 +19,9 @@ class Feature(
     public List<Feature> NewFeatures { get; } = newFeatures;
     public List<Item> NewItems { get; } = newItems;
     public Dictionary<Direction, Room> NewExits { get; set; } = newExits;
+
+    public override string ToString()
+    {
+        return Name;
+    }
 }
