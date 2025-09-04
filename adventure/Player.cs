@@ -21,12 +21,29 @@ class Player
         return "You can't go that way";
     }
 
+    Item? FindItem(string name, IEnumerable<Item> collection)
+    {
+        foreach (Item item in collection)
+            if (item.Matches(name.ToLower())) return item;
+
+        return null;
+    }
+
+    Feature? FindFeature(string name, IEnumerable<Feature> collection)
+    {
+        foreach (Feature feature in collection)
+            if (feature.Matches(name.ToLower())) return feature;
+
+        return null;
+    }
+
     public string North() => Move(Direction.North);
     public string South() => Move(Direction.South);
     public string East() => Move(Direction.East);
     public string West() => Move(Direction.West);
     public string Up() => Move(Direction.Up);
     public string Down() => Move(Direction.Down);
+
     public string Exit()
     {
         Environment.Exit(0);
@@ -81,23 +98,6 @@ class Player
 
         return "Drop what?";
     }
-    
-    
-    Item? FindItem(string name, IEnumerable<Item> collection)
-    {
-        foreach (Item item in collection)
-            if (item.Matches(name.ToLower())) return item;
-
-        return null;
-    }
-
-    Feature? FindFeature(string name, IEnumerable<Feature> collection)
-    {
-        foreach (Feature feature in collection)
-            if (feature.Matches(name.ToLower())) return feature;
-
-        return null;
-    }
 
     public string Use(string[] args)
     {
@@ -145,5 +145,11 @@ class Player
         }
 
         return returnStr;
+    }
+
+    public string ListInventory()
+    {
+        if (Inventory.Count == 0) return "Inventory is empty.";
+        return string.Join("\n", Inventory);
     }
 }
