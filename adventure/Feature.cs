@@ -3,7 +3,6 @@ class Feature(
     string desc,
     string[] require,
 
-    bool isSequential,
     string unlockText,
     string[] aliases,
     List<Feature> newFeatures,
@@ -13,8 +12,7 @@ class Feature(
 {
     public string UnlockText { get; } = unlockText;
     public string[] Require { get; } = require;
-    public bool IsSequential { get; } = isSequential;
-    private int SequenceIdx = 0;
+    public int SequenceIdx = 0;
 
     public List<Feature> NewFeatures { get; } = newFeatures;
     public List<Item> NewItems { get; } = newItems;

@@ -15,7 +15,6 @@
                     "unlock_text" : "You push the door open and an old study appears on the other side.",
                     
                     "require": ["Study key"],
-                    "sequencial": false,
 
                     "new_items" : [],
                     "new_features" : [],

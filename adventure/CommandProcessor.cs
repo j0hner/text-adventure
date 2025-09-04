@@ -9,6 +9,7 @@ static class CommandProcessor
         ["look"] = (player, args) => player.Look(args),
         ["take"]  = (player, args) => player.Take(args),
         ["drop"]  = (player, args) => player.Drop(args),
+        ["use"] = (player, args) => player.Use(args),
 
         ["north"] = (player, _) => player.North(),
         ["south"] = (player, _) => player.South(),
@@ -43,8 +44,6 @@ static class CommandProcessor
 
         ["dr"] = "drop",
         ["rm"] = "drop",
-
-        ["inv"] = "inventory",
 
         ["quit"] = "exit",
         ["bye"] = "exit"

@@ -79,7 +79,71 @@ class Player
                 }
         }
 
-        return "Take what?";
+        return "Drop what?";
+    }
+    
+    
+    Item? FindItem(string name, IEnumerable<Item> collection)
+    {
+        foreach (Item item in collection)
+            if (item.Matches(name.ToLower())) return item;
+
+        return null;
     }
 
+    Feature? FindFeature(string name, IEnumerable<Feature> collection)
+    {
+        foreach (Feature feature in collection)
+            if (feature.Matches(name.ToLower())) return feature;
+
+        return null;
+    }
+
+    public string Use(string[] args)
+    {
+        string returnStr = "Use what on what?";
+
+        // these are pointless, since all null scenarios return, but the error correction would not shut up.
+        Item? item = new Item("", "");
+        Feature? target = new Feature("", "", Array.Empty<string>(), "", Array.Empty<string>(), new List<Feature>(), new List<Item>(), new Dictionary<Direction, Room>());
+
+        if (args.Length == 0) return returnStr;
+
+        if (args.Length == 1 || (args.Length == 2 && args[1] == "on"))
+        {
+            item = FindItem(args[0], Inventory);
+            string itemName = (item == null) ? "what" : item.Name;
+            return $"Use {itemName} on what?";
+        }
+
+        if (args.Length == 2 || (args.Length == 3 && args[1] == "on"))
+        {
+            item = FindItem(args[0], Inventory);
+            target = FindFeature(args[(args[1] == "on") ? 2 : 1], Location.Features);
+
+            string itemName = (item == null) ? "what" : item.Name;
+            string featureName = (target == null) ? "what" : target.Name;
+
+            if (item == null || target == null) return $"Use {itemName} on {featureName}";
+        }
+
+        if (item.Matches(target.Require[target.SequenceIdx]))
+        {
+            Location.Features.AddRange(target.NewFeatures);
+            Location.Items.AddRange(target.NewItems);
+
+            foreach (var kvp in target.NewExits)
+                Location.Exits[kvp.Key] = kvp.Value;
+
+            if (target.SequenceIdx == target.Require.Length - 1)
+            {
+                Location.Features.Remove(target);
+            }
+            returnStr = target.UnlockText;
+
+            target.SequenceIdx++;
+        }
+
+        return returnStr;
+    }
 }

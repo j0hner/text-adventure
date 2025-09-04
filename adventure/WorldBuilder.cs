@@ -51,13 +51,13 @@ static class WorldBuilder
 
             if (rr.Features != null)
             {
-                foreach (var fr in rr.Features)
+                foreach (var rawFeature in rr.Features)
                 {
-                    Feature feature = fr.ToFeature();
+                    Feature feature = rawFeature.ToFeature();
                     FeatureList.Add(feature);
 
-                    if (fr.NewExits != null)
-                        FeatureExitDict[feature.Name.ToLower()] = fr.NewExits;  // normalized key
+                    if (rawFeature.NewExits != null)
+                        FeatureExitDict[feature.Name.ToLower()] = rawFeature.NewExits;  // normalized key
 
                     room.Features.Add(feature);
                     FeatureDict[feature.Name.ToLower()] = feature;
@@ -88,23 +88,22 @@ static class WorldBuilder
 
             foreach (string key in rawExits.Keys)
             {
-                string exitReferenceStr = rawExits[key].ToLower();
+                string exitReferenceStr = rawExits[key.ToLower()].ToLower();
 
                 if (!RoomsDict.ContainsKey(exitReferenceStr)) throw new InvalidDataException($"Room reference \"{exitReferenceStr}\" not found. Error in key 'exits' of room: \"{name}\".");
-                Room roomReference = RoomsDict[exitReferenceStr];
+                Room roomReference = RoomsDict[exitReferenceStr.ToLower()];
 
                 if (!dirLookup.ContainsKey(key)) throw new InvalidDataException($"Invalid direction key \"{key}\" in key 'exits' of room: \"{name}\"");
+
                 Direction keyDirection = dirLookup[key];
                 if (room.Exits.ContainsKey(keyDirection)) throw new InvalidDataException($"Duplicate direction in key 'exits' of room: \"{name}\"");
 
                 room.Exits[keyDirection] = roomReference;
             }
         }
-
         // step 4 resolve exit refeneces in features
         foreach (Feature feature in FeatureList)
         {
-            if (feature.NewExits.Count() == 0) continue;
             string name = feature.Name;
             Dictionary<string, string> rawExits = FeatureExitDict[name.ToLower()];
 
@@ -122,6 +121,7 @@ static class WorldBuilder
                 feature.NewExits[keyDirection] = roomReference;
             }
         }
+
         return new Player(RoomsDict[playerLocation], inventory);
     }
 
@@ -159,7 +159,6 @@ static class WorldBuilder
         public string? UnlockText { get; set; }
 
         public string[]? Require { get; set; }
-        public bool? Sequential { get; set; }
         public string[]? Aliases { get; set; }
 
         [property: JsonPropertyName("new_features")]
@@ -187,7 +186,6 @@ static class WorldBuilder
                 Name ?? throw new InvalidDataException($"Mandatory JSON key 'name' in feature is missing."),
                 Desc ?? throw new InvalidDataException($"Mandatory JSON key 'desc' in {Name} is missing."),
                 Require ?? throw new InvalidDataException($"Mandatory JSON key 'require' in {Name} is missing."),
-                Sequential ?? false, 
 
                 UnlockText ?? "",
                 Aliases ?? Array.Empty<string>(),
