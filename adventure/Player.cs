@@ -1,7 +1,7 @@
 class Player
 {
     List<Item> Inventory;
-    Room Location;
+    public Room Location { get; private set; }
 
     public Player(Room startLocation, List<Item>? startItems = null)
     {
@@ -16,9 +16,9 @@ class Player
         if (Location.Exits.ContainsKey(direction))
         {
             Location = Location.Exits[direction];
-            return $"You went {direction}.\n{Location}";
+            return $"You went {direction}.";
         }
-        return "You can't go that way";
+        return $"You can't go {direction}";
     }
 
     Item? FindItem(string name, IEnumerable<Item> collection)
@@ -150,6 +150,23 @@ class Player
     public string ListInventory()
     {
         if (Inventory.Count == 0) return "Inventory is empty.";
-        return string.Join("\n", Inventory);
+        return $"You have: {string.Join(", ", Inventory)}";
+    }
+
+    public string? Tutorial()
+    {
+        string[] pages = File.ReadAllText("tutorial.txt").Split("&&");
+        foreach (string page in pages)
+        {
+            Console.Clear();
+            Console.Write(page);
+            ConsoleKeyInfo key;
+            do { key = Console.ReadKey(true); }
+            while (!new ConsoleKey[] { ConsoleKey.Enter, ConsoleKey.Escape }.Contains(key.Key));
+
+            if (key.Key == ConsoleKey.Escape) return null;
+        }
+
+        return null;
     }
 }

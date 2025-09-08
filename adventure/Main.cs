@@ -7,33 +7,46 @@ internal class Adventure
     private static void Main()
     {
         Console.Clear();
-        // Player player = WorldBuilder.MakeWorld("World.json");
-        // while (true)
-        // {
-        //     Console.Write("\r=> ");
-        //     string command = Console.ReadLine()!;
-        //     string? response = CommandProcessor.Process(player, command);
+        Player player = WorldBuilder.MakeWorld("World.json");
+        string oldResponse = "Type tutor for a tutorial, or help to list available commands.";
 
-        //     if (response == null)
-        //     {
-        //         Console.SetCursorPosition(0, Console.CursorTop - 1);
-        //         continue;
-        //     }
-        //     Console.WriteLine(response);
-        //     Console.WriteLine();
-        // }
+        Rewrite(prettyOutput(player.Location.ToString(), oldResponse));
 
-        Console.WriteLine(MakeLines("Idk quite a long test string. It has to be over 50 characters long to do something. Watch this peace of bs throw an exception.\nalso there is a newline just to see what that does", "idk sum command response. It also gotta be pretty long so lets just extend this bs to some serious length."));
+        while (true)
+        {
+            Console.SetCursorPosition(5, Console.CursorTop - 2);
+            string command = Console.ReadLine()!;
+            string? response = CommandProcessor.Process(player, command);
+
+            if (response == null) response = oldResponse; // make it look line nothing happened
+            
+            oldResponse = response;
+            Rewrite(prettyOutput(player.Location.ToString(), response));
+        }
+
+        //Console.WriteLine(MakeLines("Idk quite a long test string. It has to be over 50 characters long to do something. Watch this peace of bs throw an exception.\nalso there is a newline just to see what that does", "idk sum command response. It also gotta be pretty long so lets just extend this bs to some serious length."));
     }
 
-    static string MakeLines(string WorldDesc, string CommandResponse)
+    static void Rewrite(string content)
     {
-        string top       = "╔" + new string('═', width - 2) + "╗";
-        string middle    = "╟" + new string('─', width - 2) + "╢";
-        string bottom    = "╚" + new string('═', width - 2) + "╝";
+        Console.SetCursorPosition(0, 0);
+        Console.WriteLine(content);
+        int t = Console.CursorTop;
+        for (int i = 0; i < 5; i++)
+        {
+            Console.WriteLine(new string(' ', width));
+        }
+        Console.SetCursorPosition(0, t);
+    }
+
+    static string prettyOutput(string WorldDesc, string CommandResponse)
+    {
+        string top = "╔" + new string('═', width - 2) + "╗";
+        string middle = "╟" + new string('─', width - 2) + "╢";
+        string bottom = "╚" + new string('═', width - 2) + "╝";
         string commandLine = "║ =>" + new string(' ', width - 5) + "║";
         string lineStart = "║ ";
-        string lineEnd   = " ║";
+        string lineEnd = " ║";
 
         List<string> AddBounds(List<string> lines)
         {

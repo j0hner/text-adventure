@@ -1,0 +1,144 @@
+WELCOME TO THE ADVENTURE
+----------------------------------------
+You are about to explore a world of connected rooms.  
+Each room has a description, possible exits, and may contain:
+- Items you can pick up and carry
+- Features you can interact with but cannot carry (like doors or levers)
+
+You move through the world by typing directions.  
+You gather items, examine your surroundings, and use what you find  
+to unlock new paths, reveal secrets, and progress further.
+
+This turorial will show you how to interact with this world using commands.
+You can type help at any time to wiew the list of commands and their aliases
+or type tutor to bring up this page again
+----------------------------------------
+Page 1 of 9
+([Enter] to continue, [Esc] to quit)
+
+&&
+ALIASES AND NAMING
+----------------------------------------
+To propertly interact with the world, you need to know how to
+define what you are looking for. Most of the commands in the game
+require you to list what exactly you want to interact with
+(eg. item name or feature name). To help with this, here are a few tips:
+
+1) If the item name has spaces in it, you can use an alias
+(viz. point 2) or wrap the item name in quotes (eg. "fishing rod")
+
+2) Each thing you encounter might have several aliases. For example:
+The item "Basement Key" might have aliases such as "key" or "bkey".
+As you play further you will become better at finding these aliases.
+
+3) If multiple items share an alias, you will interact with the first listed.
+
+4) All item and feature naming is case insensitive.
+(eg. "ThiNg" is the same as "thing" or "THING")
+----------------------------------------
+Page 2 of 9
+([Enter] to continue, [Esc] to quit)
+
+&&
+MOVEMENT
+----------------------------------------
+You move by typing directions:
+
+north   (alias: n)
+south   (alias: s)
+east    (alias: e)
+west    (alias: w)
+up      (alias: u)
+down    (alias: d)
+
+Example:
+    north
+    n
+----------------------------------------
+Page 3 of 9
+([Enter] to continue, [Esc] to quit)
+
+&&
+LOOKING
+----------------------------------------
+Describe an item in the room, in your inventory, or a feature.
+
+look <thing>   (aliases: examine, x, l, insp)
+
+Example:
+  look key
+  l door
+----------------------------------------
+Page 4 of 9
+([Enter] to continue, [Esc] to quit)
+
+&&
+INVENTORY
+----------------------------------------
+List everything you are carrying.
+
+inventory      (aliases: inv, i)
+
+Example:
+  inventory
+  i
+----------------------------------------
+Page 5 of 9
+([Enter] to continue, [Esc] to quit)
+
+&&
+TAKING ITEMS
+----------------------------------------
+Pick up an item from the current room.
+
+take <item>    (aliases: t, tk, get, grab)
+
+Example:
+  take lantern
+  t note
+----------------------------------------
+Page 6 of 9
+([Enter] to continue, [Esc] to quit)
+
+&&
+DROPPING ITEMS
+----------------------------------------
+Remove an item from your inventory and leave it in the
+current room.
+
+drop <item>    (aliases: dr, rm)
+
+Example:
+  drop lantern
+  dr key
+----------------------------------------
+Page 7 of 9
+([Enter] to continue, [Esc] to quit)
+
+&&
+USING ITEMS
+----------------------------------------
+Apply an item from your inventory to a feature in the room.
+
+use <item> on <feature>
+use <item> <feature>
+
+Example:
+  use key on door
+  use key door
+----------------------------------------
+Page 8 of 9
+([Enter] to continue, [Esc] to quit)
+
+&&
+EXITING THE GAME
+----------------------------------------
+exit   (aliases: quit, bye)
+Leave the game.
+
+Example:
+  exit
+  quit
+----------------------------------------
+Page 9 of 9
+([Enter] or [Esc] to quit)

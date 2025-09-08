@@ -2,7 +2,7 @@ using System.Text.RegularExpressions;
 
 static class CommandProcessor
 {
-    static Dictionary<string, Func<Player, string[], string>> Commands = new Dictionary<string, Func<Player, string[], string>>()
+    public static Dictionary<string, Func<Player, string[], string?>> Commands { get; } = new Dictionary<string, Func<Player, string[], string?>>()
     {
         ["exit"]        = (player, _) => player.Exit(),
         ["inventory"]   = (player, _) => player.ListInventory(),
@@ -16,11 +16,13 @@ static class CommandProcessor
         ["south"]       = (player, _) => player.South(),
         ["east"]        = (player, _) => player.East(),
         ["west"]        = (player, _) => player.West(),
-        ["up"]          = (player, _) => player.Down(),
+        ["up"]          = (player, _) => player.Up(),
         ["down"]        = (player, _) => player.Down(),
+        ["tutorial"]    = (player, _) => player.Tutorial(),
+        ["help"]        = (player, _) => Help()
     };
 
-    static Dictionary<string, string> CommandAliases = new Dictionary<string, string>()
+    public static Dictionary<string, string> CommandAliases { get; } = new Dictionary<string, string>()
     {
         ["n"]       = "north",
         ["s"]       = "south",
@@ -45,6 +47,8 @@ static class CommandProcessor
 
         ["dr"]      = "drop",
         ["rm"]      = "drop",
+
+        ["tutor"]   = "tutorial",
 
         ["quit"]    = "exit",
         ["bye"]     = "exit"
@@ -71,5 +75,31 @@ static class CommandProcessor
         
         return $"Do what?"; // command not found
         
+    }
+
+    static string? Help()
+    {
+        Console.Clear();
+        Console.WriteLine("Available commands:\n");
+
+        foreach (var cmd in Commands.Keys.OrderBy(k => k))
+        {
+            var aliases = CommandAliases
+                .Where(kvp => kvp.Value == cmd)
+                .Select(kvp => kvp.Key)
+                .OrderBy(a => a)
+                .ToList();
+
+            Console.Write($"{cmd,-12}");
+            if (aliases.Any())
+                Console.WriteLine($"(aliases: {string.Join(", ", aliases)})");
+            else
+                Console.WriteLine();
+        }
+
+        Console.WriteLine("\nPress any key to continue...");
+        Console.ReadKey();
+        Console.Clear();
+        return null;
     }
 }
